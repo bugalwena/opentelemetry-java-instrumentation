@@ -1,4 +1,4 @@
-FROM adoptopenjdk:11-jdk as app-build
+FROM adoptopenjdk:11-jdk@sha256:0f081fe6de07a0a97d74768f512e2a2f2493cb5f383d7d4fa9f46a6d689b6850 as app-build
 
 # This is the base image that will contain a built version of the spring-petclinic-rest
 # application. Installing the dependencies and maven compiling the application is time
@@ -11,7 +11,7 @@ WORKDIR /app/spring-petclinic-rest
 RUN ./mvnw package -Dmaven.test.skip=true
 RUN cp target/spring-petclinic-rest*.jar /app/spring-petclinic-rest.jar
 
-FROM bellsoft/liberica-openjdk-alpine:11
+FROM bellsoft/liberica-openjdk-alpine:11@sha256:45bfbd7b87ed430a84d1b5021520a83f68c4b16a60cd39bda76258fe5e1e2a15
 COPY --from=app-build /app/spring-petclinic-rest.jar /app/spring-petclinic-rest.jar
 WORKDIR /app
 EXPOSE 9966
